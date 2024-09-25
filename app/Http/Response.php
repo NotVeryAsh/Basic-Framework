@@ -25,17 +25,19 @@ class Response {
         exit;
     }
 
-    // TODO Pass data into view
     static function view($view, $data = [])
     {
         self::setHeaders([
             'Content-Type: text/html'
         ]);
 
-        $view = self::$viewDir . $view . ".php";
-        $view = file_exists($view) ? $view : self::$viewDir . "404.php";
+        extract($data, EXTR_PREFIX_SAME, "");
 
-        echo file_get_contents($view);
+        ob_start();
+        require file_exists(self::$viewDir . $view . ".php") ?
+            self::$viewDir . $view . ".php" :
+            self::$viewDir . "404.php";;
+        echo ob_get_clean();
         exit;
     }
 }

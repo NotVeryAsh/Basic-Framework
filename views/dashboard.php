@@ -1,1 +1,5 @@
-Here is your dashboard!
+<?php
+
+echo "Here is your dashboard!, $name";
+
+?>
